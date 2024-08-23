@@ -21,4 +21,4 @@ jobs:
       - name: publish to GitHub Pages
         uses: actions/upload-pages-artifact@v3.0.1
         with:
-          path: pkg
+          path: dist
