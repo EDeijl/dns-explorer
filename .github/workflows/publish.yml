@@ -1,0 +1,24 @@
+name: Publish to GitHub Pages
+
+on:
+  push:
+    branches: ["main"]
+env:
+  CARGO_TERM_COLOR: always
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - name: Install wasm-pack
+        run: curl https://rustwasm.github.io/wasm-pack/installer/init.sh -sSf | sh
+      - run: cargo test
+      - run: wasm-pack test --headless --chrome
+      - run: wasm-pack test --headless --firefox
+      - name: build artifact
+        run: npm run build
+      - name: publish to GitHub Pages
+        uses: actions/upload-pages-artifact@v3.0.1
+        with:
+          path: pkg
