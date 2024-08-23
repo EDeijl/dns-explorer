@@ -8,6 +8,6 @@ extern "C" {
 }
 
 #[wasm_bindgen]
-pub fn greet() {
-    alert("Hello, dns-explorer!");
+pub fn greet(input: &str) {
+    alert(format!("Lookup for {}", input).as_str());
 }
