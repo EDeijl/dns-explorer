@@ -9,9 +9,6 @@ env:
     # Grant GITHUB_TOKEN the permissions required to make a Pages deployment
 jobs:
   build:
-    permissions:
-      pages: write      # to deploy to Pages
-      id-token: write   # to verify the deployment originates from an appropriate source
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -26,6 +23,15 @@ jobs:
         uses: actions/upload-pages-artifact@v3.0.1
         with:
           path: dist
-      - name: Deploy to github pages
+
+  publish:
+    needs: build
+    permissions:
+      pages: write      # to deploy to Pages
+      id-token: write   # to verify the deployment originates from an appropriate source
+    runs-on: ubuntu-latest
+    # Specify runner + deployment step
+    steps:
+      - name: Deploy to GitHub Pages
         id: deployment
-        uses: actions/deploy-pages@v4
+        uses: actions/deploy-pages@v4 # or specific "vX.X.X" version tag for this action
